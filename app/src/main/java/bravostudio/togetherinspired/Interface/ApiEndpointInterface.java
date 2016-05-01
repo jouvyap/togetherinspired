@@ -17,5 +17,4 @@ public interface ApiEndpointInterface {
 
     @GET("get_news.php")
     Call<NewsModel> getNews();
-
 }

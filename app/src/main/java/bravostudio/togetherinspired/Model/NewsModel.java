@@ -6,7 +6,7 @@ import java.util.Map;
 public class NewsModel {
 
     private String title;
-    private String text;
+    private String description;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
@@ -30,19 +30,19 @@ public class NewsModel {
     /**
      *
      * @return
-     * The text
+     * The description
      */
-    public String getText() {
-        return text;
+    public String getDescription() {
+        return description;
     }
 
     /**
      *
-     * @param text
-     * The text
+     * @param description
+     * The description
      */
-    public void setText(String text) {
-        this.text = text;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Map<String, Object> getAdditionalProperties() {
