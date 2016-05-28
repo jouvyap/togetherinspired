@@ -3,4 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="colorTagFamily">#9C27B0</color>
+    <color name="colorTagFinance">#FFC107</color>
+    <color name="colorTagHealth">#009688</color>
+    <color name="colorTagShopping">#FF5722</color>
+    <color name="colorTagHobby">#795548</color>
 </resources>

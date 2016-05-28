@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:id="@+id/menu_group_feature">
+        <item
+            android:icon="@mipmap/ic_card_giftcard_black_24dp"
+            android:id="@+id/nav_reward"
+            android:title="Reward"/>
+        <item
+            android:icon="@mipmap/ic_shopping_basket_black_24dp"
+            android:id="@+id/nav_store"
+            android:title="Store"/>
+    </group>
+
+    <group android:id="@+id/menu_group_user">
+        <item
+            android:id="@+id/nav_profile"
+            android:title="Change Profile"/>
+        <item
+            android:id="@+id/nav_logout"
+            android:title="Logout"/>
+    </group>
+
+</menu>

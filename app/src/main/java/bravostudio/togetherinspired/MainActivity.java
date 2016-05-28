@@ -1,6 +1,12 @@
 package bravostudio.togetherinspired;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -10,20 +16,27 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import bravostudio.togetherinspired.Adapter.SectionsPagerAdapter;
 import bravostudio.togetherinspired.Interface.ApiEndpointInterface;
 import bravostudio.togetherinspired.Model.TopicModel;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener{
 
+    public static final int LOGIN_RESULT_ACTIVITY = 1;
     public static final String BASE_URL = "http://jouvyap.com/together/";
 
     /**
@@ -42,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private View mNavigationHeader;
+    private Menu mNavigationMenu;
+    private boolean loggedIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +66,27 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        mNavigationHeader = navigationView.getHeaderView(0);
+        mNavigationMenu = navigationView.getMenu();
+        TextView loginLabel = (TextView) mNavigationHeader.findViewById(R.id.navHeaderLabelLogin);
+        loginLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivityForResult(loginIntent, LOGIN_RESULT_ACTIVITY);
+            }
+        });
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -67,33 +104,93 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         apiEndpointInterface = retrofit.create(ApiEndpointInterface.class);
+
+        updateNavigationHeader();
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     public ApiEndpointInterface getApiEndpointInterface(){
         return apiEndpointInterface;
     }
 
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_reward) {
+            Toast.makeText(MainActivity.this, "Reward Clicked", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_store) {
+            Toast.makeText(MainActivity.this, "Store Clicked", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_profile){
+            Toast.makeText(MainActivity.this, "Change Profile Clicked", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_logout){
+            logout();
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode){
+            case (LOGIN_RESULT_ACTIVITY):{
+                if (resultCode == Activity.RESULT_OK) {
+                    boolean loggedIn = data.getBooleanExtra(LoginActivity.RETURN_INTENT, false);
+                    if(loggedIn){
+                        login();
+                    }
+                }
+                break;
+            }
         }
+    }
 
-        return super.onOptionsItemSelected(item);
+    private void updateNavigationHeader(){
+        TextView nameLabel = (TextView) mNavigationHeader.findViewById(R.id.navHeaderLabelName);
+        TextView emailLabel = (TextView) mNavigationHeader.findViewById(R.id.navHeaderLabelEmail);
+        TextView loginLabel = (TextView) mNavigationHeader.findViewById(R.id.navHeaderLabelLogin);
+        MenuItem rewardMenu = mNavigationMenu.findItem(R.id.nav_reward);
+
+        if(loggedIn){
+            nameLabel.setText("Jouvy Alif Pradewo");
+            emailLabel.setText("jouvyap@gmail.com");
+            loginLabel.setVisibility(View.INVISIBLE);
+            rewardMenu.setIcon(R.mipmap.ic_card_giftcard_black_24dp);
+            rewardMenu.setEnabled(true);
+            mNavigationMenu.setGroupVisible(R.id.menu_group_user, true);
+        } else{
+            nameLabel.setText("Login first");
+            emailLabel.setText("to unlock all features");
+            loginLabel.setVisibility(View.VISIBLE);
+            rewardMenu.setIcon(R.mipmap.ic_lock_black_24dp);
+            rewardMenu.setEnabled(false);
+            mNavigationMenu.setGroupVisible(R.id.menu_group_user, false);
+        }
+    }
+
+    private void login(){
+        Toast.makeText(MainActivity.this, "Login success", Toast.LENGTH_SHORT).show();
+        loggedIn = true;
+        updateNavigationHeader();
+    }
+
+    private void logout(){
+        Toast.makeText(MainActivity.this, "Logout success", Toast.LENGTH_SHORT).show();
+        loggedIn = false;
+        updateNavigationHeader();
     }
 
 }

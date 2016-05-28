@@ -1,6 +1,5 @@
 package bravostudio.togetherinspired.Interface;
 
-import bravostudio.togetherinspired.Model.NewsModel;
 import bravostudio.togetherinspired.Model.TopicModel;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -14,7 +13,4 @@ public interface ApiEndpointInterface {
 
     @GET("get_topic.php")
     Call<TopicModel> getTopic();
-
-    @GET("get_news.php")
-    Call<NewsModel> getNews();
 }

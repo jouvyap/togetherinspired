@@ -1,56 +1,43 @@
 package bravostudio.togetherinspired.Model;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.Serializable;
 
-public class NewsModel {
+/**
+ * Created by jouvyap on 5/26/16.
+ */
+public class NewsModel implements Serializable{
 
     private String title;
-    private String description;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private String tag;
+    private String content;
 
-    /**
-     *
-     * @return
-     * The title
-     */
+    public NewsModel(String title, String tag, String content) {
+        this.title = title;
+        this.tag = tag;
+        this.content = content;
+    }
+
     public String getTitle() {
         return title;
     }
 
-    /**
-     *
-     * @param title
-     * The title
-     */
     public void setTitle(String title) {
         this.title = title;
     }
 
-    /**
-     *
-     * @return
-     * The description
-     */
-    public String getDescription() {
-        return description;
+    public String getTag() {
+        return tag;
     }
 
-    /**
-     *
-     * @param description
-     * The description
-     */
-    public void setDescription(String description) {
-        this.description = description;
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
+    public String getContent() {
+        return content;
     }
 
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
+    public void setContent(String content) {
+        this.content = content;
     }
-
 }
