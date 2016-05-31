@@ -2,12 +2,12 @@ package bravostudio.togetherinspired.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -40,23 +40,23 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
         switch (mData.get(position).getTag()){
             case "Family":
-                holder.mNewsTag.setTextColor(mContext.getResources().getColor(R.color
+                holder.mNewsTagCardView.setCardBackgroundColor(mContext.getResources().getColor(R.color
                         .colorTagFamily));
                 break;
             case "Finance":
-                holder.mNewsTag.setTextColor(mContext.getResources().getColor(R.color
+                holder.mNewsTagCardView.setCardBackgroundColor(mContext.getResources().getColor(R.color
                         .colorTagFinance));
                 break;
             case "Health":
-                holder.mNewsTag.setTextColor(mContext.getResources().getColor(R.color
+                holder.mNewsTagCardView.setCardBackgroundColor(mContext.getResources().getColor(R.color
                         .colorTagHealth));
                 break;
             case "Shopping":
-                holder.mNewsTag.setTextColor(mContext.getResources().getColor(R.color
+                holder.mNewsTagCardView.setCardBackgroundColor(mContext.getResources().getColor(R.color
                         .colorTagShopping));
                 break;
             case "Hobby":
-                holder.mNewsTag.setTextColor(mContext.getResources().getColor(R.color
+                holder.mNewsTagCardView.setCardBackgroundColor(mContext.getResources().getColor(R.color
                         .colorTagHobby));
                 break;
             default:
@@ -76,11 +76,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.news_title)
-        TextView mNewsTitle;
-
-        @Bind(R.id.news_tag)
-        TextView mNewsTag;
+        @Bind(R.id.news_title) TextView mNewsTitle;
+        @Bind(R.id.news_tag) TextView mNewsTag;
+        @Bind(R.id.news_tag_card_view) CardView mNewsTagCardView;
 
         public ViewHolder(View v) {
             super(v);

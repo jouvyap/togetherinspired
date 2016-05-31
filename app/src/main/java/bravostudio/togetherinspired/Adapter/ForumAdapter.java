@@ -1,6 +1,7 @@
 package bravostudio.togetherinspired.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import bravostudio.togetherinspired.ChatActivity;
 import bravostudio.togetherinspired.Model.ForumModel;
 import bravostudio.togetherinspired.R;
 import butterknife.Bind;
@@ -20,9 +22,12 @@ import butterknife.ButterKnife;
  */
 public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ViewHolder> {
 
-    private Context mContext;
-    private String mForumType;
-    private List<ForumModel> mData;
+    public static final String FORUM_TYPE = "bravostudio.togetherinspired.FORUM_TYPE";
+    public static final String FORUM_TITLE = "bravostudio.togetherinspired.FORUM_TITLE";
+
+    private static Context mContext;
+    private static String mForumType;
+    private static List<ForumModel> mData;
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -89,7 +94,10 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ViewHolder> 
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent chatIntent = new Intent(mContext, ChatActivity.class);
+                    chatIntent.putExtra(FORUM_TYPE, mForumType);
+                    chatIntent.putExtra(FORUM_TITLE, mData.get(getAdapterPosition()).getTitle());
+                    mContext.startActivity(chatIntent);
                 }
             });
         }

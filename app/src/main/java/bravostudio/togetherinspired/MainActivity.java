@@ -13,23 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
-
 import bravostudio.togetherinspired.Adapter.SectionsPagerAdapter;
 import bravostudio.togetherinspired.Interface.ApiEndpointInterface;
-import bravostudio.togetherinspired.Model.TopicModel;
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -105,7 +96,7 @@ public class MainActivity extends AppCompatActivity
 
         apiEndpointInterface = retrofit.create(ApiEndpointInterface.class);
 
-        updateNavigationHeader();
+        updateNavigationHeader(null, null);
     }
 
     @Override
@@ -149,8 +140,10 @@ public class MainActivity extends AppCompatActivity
             case (LOGIN_RESULT_ACTIVITY):{
                 if (resultCode == Activity.RESULT_OK) {
                     boolean loggedIn = data.getBooleanExtra(LoginActivity.RETURN_INTENT, false);
+                    String nameLoggedIn = data.getStringExtra(LoginActivity.RETURN_NAME);
+                    String emailLoggedIn = data.getStringExtra(LoginActivity.RETURN_EMAIL);
                     if(loggedIn){
-                        login();
+                        login(nameLoggedIn, emailLoggedIn);
                     }
                 }
                 break;
@@ -158,18 +151,21 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void updateNavigationHeader(){
+    private void updateNavigationHeader(String name, String email){
         TextView nameLabel = (TextView) mNavigationHeader.findViewById(R.id.navHeaderLabelName);
         TextView emailLabel = (TextView) mNavigationHeader.findViewById(R.id.navHeaderLabelEmail);
         TextView loginLabel = (TextView) mNavigationHeader.findViewById(R.id.navHeaderLabelLogin);
         MenuItem rewardMenu = mNavigationMenu.findItem(R.id.nav_reward);
+        MenuItem storeMenu = mNavigationMenu.findItem(R.id.nav_store);
 
         if(loggedIn){
-            nameLabel.setText("Jouvy Alif Pradewo");
-            emailLabel.setText("jouvyap@gmail.com");
+            nameLabel.setText(name);
+            emailLabel.setText(email);
             loginLabel.setVisibility(View.INVISIBLE);
             rewardMenu.setIcon(R.mipmap.ic_card_giftcard_black_24dp);
             rewardMenu.setEnabled(true);
+            storeMenu.setIcon(R.mipmap.ic_shopping_basket_black_24dp);
+            storeMenu.setEnabled(true);
             mNavigationMenu.setGroupVisible(R.id.menu_group_user, true);
         } else{
             nameLabel.setText("Login first");
@@ -177,20 +173,22 @@ public class MainActivity extends AppCompatActivity
             loginLabel.setVisibility(View.VISIBLE);
             rewardMenu.setIcon(R.mipmap.ic_lock_black_24dp);
             rewardMenu.setEnabled(false);
+            storeMenu.setIcon(R.mipmap.ic_lock_black_24dp);
+            storeMenu.setEnabled(false);
             mNavigationMenu.setGroupVisible(R.id.menu_group_user, false);
         }
     }
 
-    private void login(){
+    private void login(String name, String email){
         Toast.makeText(MainActivity.this, "Login success", Toast.LENGTH_SHORT).show();
         loggedIn = true;
-        updateNavigationHeader();
+        updateNavigationHeader(name, email);
     }
 
     private void logout(){
         Toast.makeText(MainActivity.this, "Logout success", Toast.LENGTH_SHORT).show();
         loggedIn = false;
-        updateNavigationHeader();
+        updateNavigationHeader(null, null);
     }
 
 }

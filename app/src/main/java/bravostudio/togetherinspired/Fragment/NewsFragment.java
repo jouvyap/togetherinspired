@@ -51,6 +51,13 @@ public class NewsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_news, container, false);
         ButterKnife.bind(this, rootView);
 
+        mSwipeRefreshLayout.setColorSchemeResources(
+                R.color.colorTagFamily,
+                R.color.colorTagFinance,
+                R.color.colorTagHealth,
+                R.color.colorTagHobby,
+                R.color.colorTagShopping
+        );
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

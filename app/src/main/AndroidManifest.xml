@@ -53,6 +53,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="bravostudio.togetherinspired.MainActivity"/>
         </activity>
+        <activity android:name=".ChatActivity">
+        </activity>
     </application>
 
 </manifest>

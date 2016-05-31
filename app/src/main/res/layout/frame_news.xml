@@ -20,9 +20,20 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
 
-        <TextView
-            android:id="@+id/news_tag"
+        <android.support.v7.widget.CardView
+            android:id="@+id/news_tag_card_view"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="4dp">
+
+            <TextView
+                android:id="@+id/news_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                android:layout_margin="4dp"/>
+        </android.support.v7.widget.CardView>
+
     </LinearLayout>
 </android.support.v7.widget.CardView>

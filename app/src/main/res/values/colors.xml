@@ -4,9 +4,16 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="colorTagFamily">#9C27B0</color>
-    <color name="colorTagFinance">#FFC107</color>
-    <color name="colorTagHealth">#009688</color>
-    <color name="colorTagShopping">#FF5722</color>
-    <color name="colorTagHobby">#795548</color>
+    <color name="colorTagFamily">#9C27B0</color> // deep purple
+    <color name="colorTagFinance">#2196F3</color> // blue
+    <color name="colorTagHealth">#009688</color> // teal
+    <color name="colorTagShopping">#F44336</color> // red
+    <color name="colorTagHobby">#795548</color> // brown
+
+    <color name="colorTagFamilySoft">#E1BEE7</color>
+    <color name="colorTagFinanceSoft">#BBDEFB</color>
+    <color name="colorTagHealthSoft">#B2DFDB</color>
+    <color name="colorTagShoppingSoft">#FFCDD2</color>
+    <color name="colorTagHobbySoft">#D7CCC8</color>
+
 </resources>

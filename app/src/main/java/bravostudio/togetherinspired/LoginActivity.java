@@ -46,6 +46,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private static final int REQUEST_READ_CONTACTS = 0;
     public static final String RETURN_INTENT = "bravostudio.togetherinspired.RETURN_INTENT";
+    public static final String RETURN_NAME = "bravostudio.togetherinspired.RETURN_NAME";
+    public static final String RETURN_EMAIL = "bravostudio.togetherinspired.RETURN_EMAIL";
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -350,6 +352,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
                 resultIntent.putExtra(RETURN_INTENT, true);
+                resultIntent.putExtra(RETURN_NAME, "Jouvy Alif Pradewo");
+                resultIntent.putExtra(RETURN_EMAIL, mEmail);
                 setResult(Activity.RESULT_OK, resultIntent);
                 finish();
             } else {

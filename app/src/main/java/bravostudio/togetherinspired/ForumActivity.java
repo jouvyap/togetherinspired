@@ -12,7 +12,6 @@ import java.util.List;
 import bravostudio.togetherinspired.Adapter.ForumAdapter;
 import bravostudio.togetherinspired.Fragment.TopicFragment;
 import bravostudio.togetherinspired.Model.ForumModel;
-import bravostudio.togetherinspired.Model.NewsModel;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
